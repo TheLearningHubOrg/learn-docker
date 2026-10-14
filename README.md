@@ -1,75 +1,99 @@
-# Learn Docker: The Complete Beginner-to-Expert Masterclass
+# Learn Docker 🐳
 
-[![CI Test Suite](https://github.com/manthanank/learn-docker/actions/workflows/ci.yml/badge.svg)](https://github.com/manthanank/learn-docker/actions/workflows/ci.yml)
-[![Docker Image](https://github.com/manthanank/learn-docker/actions/workflows/docker.yml/badge.svg)](https://github.com/manthanank/learn-docker/actions/workflows/docker.yml)
-[![Releases](https://github.com/manthanank/learn-docker/actions/workflows/releases.yml/badge.svg)](https://github.com/manthanank/learn-docker/actions/workflows/releases.yml)
-[![Node Version](https://img.shields.io/badge/node->=18.0.0-green.svg)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![OCI Compliant](https://img.shields.io/badge/OCI-Image%20%26%20Runtime-blue.svg)](https://opencontainers.org/)
+<div align="center">
 
-An exhaustive, authoritative, **beginner-to-expert guide** and interactive platform for Docker and container virtualization. This curriculum begins with absolute zero-prerequisite fundamentals, walks through intermediate multi-container development, advances into production optimization and security, and culminates in Linux kernel internals (`runc`, `containerd`, Namespaces, Cgroups v2, OverlayFS, and iptables NAT).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![OCI Compliant](https://img.shields.io/badge/OCI-Image%20%26%20Runtime-blue.svg?logo=docker)](https://opencontainers.org/)
+[![Containerd Engine](https://img.shields.io/badge/Engine-Containerd%20%7C%20Runc-purple.svg)](https://containerd.io/)
+[![Build Engine](https://img.shields.io/badge/Build-BuildKit%20Cache%20Mounts-orange.svg)](https://docs.docker.com/build/buildkit/)
+[![Kernel Primitives](https://img.shields.io/badge/Linux-Namespaces%20%26%20Cgroups%20v2-lightgrey.svg?logo=linux)](https://kernel.org/)
+[![Production Ready](https://img.shields.io/badge/Status-Enterprise%20Grade-brightgreen.svg)](https://github.com/TheLearningHubOrg/learn-docker)
+
+**An exhaustive, production-grade masterclass from absolute zero to staff-level Docker & container systems architecture.**  
+Master multi-stage builds, BuildKit cache mounts, Docker Compose service discovery, Linux kernel primitives (Namespaces, Cgroups v2, OverlayFS, iptables NAT), and Kubernetes deployment transitions.
+
+[Stage 1: Foundations](#1-stage-1-absolute-beginner-foundations) • [Stage 2: Multi-Container](#2-stage-2-intermediate-multi-container-workflows) • [Stage 3: Optimization](#3-stage-3-advanced-optimization--production-engineering) • [Stage 4: Kernel Primitives](#4-stage-4-expert-internals--kernel-primitives) • [Stage 5: K8s Migration](#5-stage-5-enterprise-devops--kubernetes-migration) • [Stage 6: Staff Interview Prep](#6-stage-6-staff--principal-devops-interview-masterclass-25-qa) • [Stage 7: Interactive Simulator](#7-stage-7-interactive-simulator-cli--rest-api-reference)
+
+<br/>
+
+<a href="https://www.buymeacoffee.com/manthanank">
+  <img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge&logo=buy-me-a-coffee" alt="Buy Me A Coffee" width="180">
+</a>
+
+</div>
 
 ---
 
-## Pedagogical Roadmap: Beginner to Expert
+## 🗺️ 7-Stage Pedagogical Roadmap
 
-```text
-+-----------------------------------------------------------------------------------------------+
-|                               THE DOCKER LEARNING JOURNEY                                     |
-+-------------------+-------------------+-----------------------+-------------------------------+
-| STAGE 1           | STAGE 2           | STAGE 3               | STAGE 4 & 5                   |
-| Absolute Beginner | Intermediate Dev  | Advanced Production   | Expert Internals & Staff Arch |
-+-------------------+-------------------+-----------------------+-------------------------------+
-| • What is Docker? | • Docker Compose  | • Multi-Stage Builds  | • OCI Stack (dockerd, runc)   |
-| • Images vs Cont. | • Multi-Service   | • BuildKit Caching    | • Linux Namespaces & Cgroups  |
-| • First Container | • Networking & DNS| • Distroless/Alpine   | • Overlay2 CoW & Inodes       |
-| • First Dockerfile| • Named Volumes   | • CIS Hardening       | • iptables NAT & veth Routing |
-| • Port Mapping    | • Bind Mounts Dev | • Signals & PID 1     | • Kubernetes Migration        |
-| • Basic 10 Cmds   | • Docker Hub Push | • Resource Quotas     | • 25 Staff Interview Q&A      |
-+-------------------+-------------------+-----------------------+-------------------------------+
+```mermaid
+flowchart LR
+    S1["Stage 1: Basics & First Dockerfile"] --> S2["Stage 2: Compose & DNS"]
+    S2 --> S3["Stage 3: Multi-Stage & BuildKit"]
+    S3 --> S4["Stage 4: Namespaces & Cgroups"]
+    S4 --> S5["Stage 5: CI/CD & K8s Migration"]
+    S5 --> S6["Stage 6: Staff Interview Masterclass"]
+    S6 --> S7["Stage 7: CLI & REST API Reference"]
 ```
 
----
-
-## Table of Contents
-1. [Stage 1: Absolute Beginner Foundations](#1-stage-1-absolute-beginner-foundations)
-   - [The "Works on My Machine" Dilemma](#the-works-on-my-machine-dilemma)
-   - [Core Mental Models: Image vs Container vs Registry](#core-mental-models-image-vs-container-vs-registry)
-   - [Running Your First Container: `hello-world` & `nginx`](#running-your-first-container-hello-world--nginx)
-   - [Essential CLI Commands for Everyday Use](#essential-cli-commands-for-everyday-use)
-   - [Writing Your Very First Dockerfile (Step-by-Step)](#writing-your-very-first-dockerfile-step-by-step)
-   - [Port Forwarding Demystified (`-p 8080:80`)](#port-forwarding-demystified--p-808080)
-   - [Container Ephemerality & Basic Volumes](#container-ephemerality--basic-volumes)
-2. [Stage 2: Intermediate Multi-Container Workflows](#2-stage-2-intermediate-multi-container-workflows)
-   - [Why Single Containers Aren't Enough](#why-single-containers-arent-enough)
-   - [Docker Compose: Multi-Service Declarative Orchestration](#docker-compose-multi-service-declarative-orchestration)
-   - [Container Networking: Service Discovery by DNS](#container-networking-service-discovery-by-dns)
-   - [Data Persistence: Named Volumes vs Bind Mounts for Local Dev](#data-persistence-named-volumes-vs-bind-mounts-for-local-dev)
-   - [Environment Variables, `.env` Files & Configurations](#environment-variables-env-files--configurations)
-   - [Pushing and Versioning on Docker Hub](#pushing-and-versioning-on-docker-hub)
-3. [Stage 3: Advanced Optimization & Production Engineering](#3-stage-3-advanced-optimization--production-engineering)
-   - [Multi-Stage Builds: Slashing Image Sizes from 1.2GB to 80MB](#multi-stage-builds-slashing-image-sizes-from-12gb-to-80mb)
-   - [BuildKit Architecture & Cache Mounts (`--mount=type=cache`)](#buildkit-architecture--cache-mounts---mounttypecache)
-   - [Secret Mounts (`--mount=type=secret`) vs Environment Leaks](#secret-mounts---mounttypesecret-vs-environment-leaks)
-   - [Base Image Selection: Ubuntu vs Debian-Slim vs Alpine vs Distroless](#base-image-selection-ubuntu-vs-debian-slim-vs-alpine-vs-distroless)
-   - [Signals, PID 1, and Init Systems (`tini`, `dumb-init`)](#signals-pid-1-and-init-systems-tini-dumb-init)
-   - [Healthchecks & Automatic Container Healing](#healthchecks--automatic-container-healing)
-   - [Resource Limits: Preventing Starvation with CPU & Memory Constraints](#resource-limits-preventing-starvation-with-cpu--memory-constraints)
-4. [Stage 4: Expert Internals & Kernel Primitives](#4-stage-4-expert-internals--kernel-primitives)
-   - [The OCI Runtime Architecture: `dockerd`, `containerd`, `shim`, `runc`](#the-oci-runtime-architecture-dockerd-containerd-shim-runc)
-   - [Linux Namespaces: PID, NET, MNT, UTS, IPC, USER](#linux-namespaces-pid-net-mnt-uts-ipc-user)
-   - [Linux Cgroups v2: Completely Fair Scheduler (CFS) & OOM Killer](#linux-cgroups-v2-completely-fair-scheduler-cfs--oom-killer)
-   - [Storage Drivers & Overlay2 UnionFS (LowerDir, UpperDir, CoW, Whiteouts)](#storage-drivers--overlay2-unionfs-lowerdir-upperdir-cow-whiteouts)
-   - [Docker Network Routing: veth Pairs, Bridge Switching & iptables NAT](#docker-network-routing-veth-pairs-bridge-switching--iptables-nat)
-   - [Rootless Docker & Attack Vector Mitigations](#rootless-docker--attack-vector-mitigations)
-5. [Stage 5: Enterprise DevOps & Kubernetes Migration](#5-stage-5-enterprise-devops--kubernetes-migration)
-   - [Docker CLI Power Tools & JSON Go Templates](#docker-cli-power-tools--json-go-templates)
-   - [Docker Compose to Kubernetes (K8s) Architectural Migration](#docker-compose-to-kubernetes-k8s-architectural-migration)
-   - [CI/CD Pipelines & Multi-Arch Buildx (AMD64 & ARM64)](#cicd-pipelines--multi-arch-buildx-amd64--arm64)
-6. [Stage 6: Staff & Principal DevOps Interview Masterclass (25 Q&A)](#6-stage-6-staff--principal-devops-interview-masterclass-25-qa)
-7. [Stage 7: Interactive Simulator, CLI & REST API Reference](#7-stage-7-interactive-simulator-cli--rest-api-reference)
+| Stage | Focus Domain | Core Concepts & Production Outcomes |
+| :--- | :--- | :--- |
+| **Stage 1** | **Absolute Beginner Foundations** | Image vs Container vs Registry, first container (`hello-world`, `nginx`), essential CLI commands, Dockerfile anatomy, port mapping. |
+| **Stage 2** | **Intermediate Multi-Container Workflows** | Docker Compose orchestration, embedded DNS service discovery, named volumes vs bind mounts, environment files, Hub versioning. |
+| **Stage 3** | **Advanced Optimization & Production Engineering** | Multi-stage builds (1.2GB -> 80MB), BuildKit cache & secret mounts, Distroless/Alpine hardening, signals & PID 1 (`tini`), healthchecks. |
+| **Stage 4** | **Expert Internals & Kernel Primitives** | OCI architecture (`dockerd`, `containerd`, `runc`), Linux Namespaces (PID, NET, MNT, etc.), Cgroups v2 limits, Overlay2 UnionFS, iptables NAT. |
+| **Stage 5** | **Enterprise DevOps & Kubernetes Migration** | CLI JSON Go templates, migrating Docker Compose to Kubernetes manifests, multi-arch cross-compilation with Docker Buildx. |
+| **Stage 6** | **Staff & Principal DevOps Interview Masterclass** | 25 in-depth staff-level container scenarios, zombie process reaping, container breakouts, high-density cluster packing. |
+| **Stage 7** | **Interactive Simulator, CLI & REST API Reference** | Docker daemon HTTP API client, multi-container sandboxes, container inspection utilities. |
 
 ---
+
+## 📋 Table of Contents
+
+- [1. Stage 1: Absolute Beginner Foundations](#1-stage-1-absolute-beginner-foundations)
+  - [1.1 The "Works on My Machine" Dilemma](#the-works-on-my-machine-dilemma)
+  - [1.2 Core Mental Models: Image vs Container vs Registry](#core-mental-models-image-vs-container-vs-registry)
+  - [1.3 Running Your First Container: hello-world & nginx](#running-your-first-container-hello-world--nginx)
+  - [1.4 Essential CLI Commands for Everyday Use](#essential-cli-commands-for-everyday-use)
+  - [1.5 Writing Your Very First Dockerfile (Step-by-Step)](#writing-your-very-first-dockerfile-step-by-step)
+  - [1.6 Port Forwarding Demystified (-p 8080:80)](#port-forwarding-demystified--p-808080)
+  - [1.7 Container Ephemerality & Basic Volumes](#container-ephemerality--basic-volumes)
+- [2. Stage 2: Intermediate Multi-Container Workflows](#2-stage-2-intermediate-multi-container-workflows)
+  - [2.1 Why Single Containers Aren't Enough](#why-single-containers-arent-enough)
+  - [2.2 Docker Compose: Multi-Service Declarative Orchestration](#docker-compose-multi-service-declarative-orchestration)
+  - [2.3 Container Networking: Service Discovery by DNS](#container-networking-service-discovery-by-dns)
+  - [2.4 Data Persistence: Named Volumes vs Bind Mounts for Local Dev](#data-persistence-named-volumes-vs-bind-mounts-for-local-dev)
+  - [2.5 Environment Variables, .env Files & Configurations](#environment-variables-env-files--configurations)
+  - [2.6 Pushing and Versioning on Docker Hub](#pushing-and-versioning-on-docker-hub)
+- [3. Stage 3: Advanced Optimization & Production Engineering](#3-stage-3-advanced-optimization--production-engineering)
+  - [3.1 Multi-Stage Builds: Slashing Image Sizes from 1.2GB to 80MB](#multi-stage-builds-slashing-image-sizes-from-12gb-to-80mb)
+  - [3.2 BuildKit Architecture & Cache Mounts (--mount=type=cache)](#buildkit-architecture--cache-mounts---mounttypecache)
+  - [3.3 Secret Mounts (--mount=type=secret) vs Environment Leaks](#secret-mounts---mounttypesecret-vs-environment-leaks)
+  - [3.4 Base Image Selection: Ubuntu vs Debian-Slim vs Alpine vs Distroless](#base-image-selection-ubuntu-vs-debian-slim-vs-alpine-vs-distroless)
+  - [3.5 Signals, PID 1, and Init Systems (tini, dumb-init)](#signals-pid-1-and-init-systems-tini-dumb-init)
+  - [3.6 Healthchecks & Automatic Container Healing](#healthchecks--automatic-container-healing)
+  - [3.7 Resource Limits: Preventing Starvation with CPU & Memory Constraints](#resource-limits-preventing-starvation-with-cpu--memory-constraints)
+- [4. Stage 4: Expert Internals & Kernel Primitives](#4-stage-4-expert-internals--kernel-primitives)
+  - [4.1 The OCI Runtime Architecture: dockerd, containerd, shim, runc](#the-oci-runtime-architecture-dockerd-containerd-shim-runc)
+  - [4.2 Linux Namespaces: PID, NET, MNT, UTS, IPC, USER](#linux-namespaces-pid-net-mnt-uts-ipc-user)
+  - [4.3 Linux Cgroups v2: Completely Fair Scheduler (CFS) & OOM Killer](#linux-cgroups-v2-completely-fair-scheduler-cfs--oom-killer)
+  - [4.4 Storage Drivers & Overlay2 UnionFS (LowerDir, UpperDir, CoW, Whiteouts)](#storage-drivers--overlay2-unionfs-lowerdir-upperdir-cow-whiteouts)
+  - [4.5 Docker Network Routing: veth Pairs, Bridge Switching & iptables NAT](#docker-network-routing-veth-pairs-bridge-switching--iptables-nat)
+  - [4.6 Rootless Docker & Attack Vector Mitigations](#rootless-docker--attack-vector-mitigations)
+- [5. Stage 5: Enterprise DevOps & Kubernetes Migration](#5-stage-5-enterprise-devops--kubernetes-migration)
+  - [5.1 Docker CLI Power Tools & JSON Go Templates](#docker-cli-power-tools--json-go-templates)
+  - [5.2 Docker Compose to Kubernetes (K8s) Architectural Migration](#docker-compose-to-kubernetes-k8s-architectural-migration)
+  - [5.3 CI/CD Pipelines & Multi-Arch Buildx (AMD64 & ARM64)](#cicd-pipelines--multi-arch-buildx-amd64--arm64)
+- [6. Stage 6: Staff & Principal DevOps Interview Masterclass (25 Q&A)](#6-stage-6-staff--principal-devops-interview-masterclass-25-qa)
+- [7. Stage 7: Interactive Simulator, CLI & REST API Reference](#7-stage-7-interactive-simulator-cli--rest-api-reference)
+  - [7.1 Simulation CLI Commands](#simulation-cli-commands)
+  - [7.2 Docker Containerization](#docker-containerization)
+  - [7.3 REST API Reference](#rest-api-reference)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#license)
+
+---
+
 ## 1. Stage 1: Absolute Beginner Foundations
 
 ### The "Works on My Machine" Dilemma
@@ -1386,5 +1410,11 @@ learn-docker serve --port 3000
 
 ---
 
-## License
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/TheLearningHubOrg/learn-docker/issues).
+
+## 📄 License
+
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+
